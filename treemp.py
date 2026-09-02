@@ -926,13 +926,21 @@ class App:
             for label, value in meta:
                 if row >= self.meta_h - 1:
                     break
-                text = f"{label}: {value}"
-                while len(text) > inner_w and row < self.meta_h - 1:
-                    win.addnstr(row, 2, text[:inner_w], inner_w, curses.color_pair(4))
-                    text = "  " + text[inner_w:]
-                    row += 1
-                if row < self.meta_h - 1:
-                    win.addnstr(row, 2, text, inner_w, curses.color_pair(4))
+                label_text = f"{label}: "
+                win.move(row, 2)
+                win.addnstr(label_text[:inner_w], inner_w, curses.color_pair(2))
+                rem_w = inner_w - len(label_text)
+                if rem_w > 0:
+                    win.addnstr(value[:rem_w], rem_w, curses.color_pair(0) | curses.A_BOLD)
+                    value = value[rem_w:]
+                row += 1
+                while len(value) > 0 and row < self.meta_h - 1:
+                    win.move(row, 2)
+                    # indent addtl lines
+                    win.addnstr("  ", inner_w, curses.color_pair(0) | curses.A_BOLD)
+                    wrap_w = inner_w - 2 
+                    win.addnstr(value[:wrap_w], wrap_w, curses.color_pair(0) | curses.A_BOLD)
+                    value = value[wrap_w:]
                     row += 1
         win.noutrefresh()
 
