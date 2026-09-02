@@ -1021,7 +1021,7 @@ class App:
                 ("Space/p", "Pause"),
                 ("+/= / -", "Vol"),
                 ("Backsp", "Restart track"),
-                ("/", "Filter"),
+                ("/", "Search"),
                 ("o", "Show current song"),
                 ("m", "Hide meta"),
                 ("q", "Quit"),
